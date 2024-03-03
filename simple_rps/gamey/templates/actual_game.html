@@ -1,0 +1,80 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}
+Rock paper scissors game
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Rock Paper Scissors Game</h1>
+  <div class="player" id="player1">
+    <h2>Player 1</h2>
+    <div class="choices">
+      <button onclick="makeMove('rock')">Rock</button>
+      <button onclick="makeMove('paper')">Paper</button>
+      <button onclick="makeMove('scissors')">Scissors</button>
+    </div>
+  </div>
+
+  <div class="player" id="player2">
+    <h2>Bot</h2>
+    <div class="choices">
+      <!-- Display bot's selection here -->
+      <div id="botSelection"></div>
+    </div>
+  </div>
+  <div id="result"></div>
+
+  <div style="margin-top: 20px;">
+    <!-- End Game button -->
+    <button onclick="endGame()" class="btn btn-danger mt-3">End Game</button>
+  </div>
+</div>
+
+<script>
+  // Event listeners for user's selections
+  function makeMove(move) {
+    // Determine bot's action (you can replace this logic with your Django logic)
+    const botAction = getBotAction();
+
+    // Compare user's selection with bot's action and display result
+    const result = compareMoves(move, botAction);
+    displayResult(result);
+  }
+
+  // Function to get the bot's action
+  function getBotAction() {
+    const actions = ['rock', 'paper', 'scissors'];
+    return actions[Math.floor(Math.random() * actions.length)];
+  }
+
+  // Function to compare user's move with bot's move
+  function compareMoves(userMove, botMove) {
+    if (userMove === botMove) {
+      return "We're even Stevens!";
+    } else if ((userMove === 'rock' && botMove === 'scissors') ||
+      (userMove === 'paper' && botMove === 'rock') ||
+      (userMove === 'scissors' && botMove === 'paper')) {
+      return 'Human is the champ!';
+    } else {
+      return 'Npc is the winner!';
+    }
+  }
+
+  // Function to display the result
+  function displayResult(result) {
+    const resultElement = document.getElementById('result');
+    resultElement.textContent = `Result: ${result}`;
+  }
+
+  function endGame() {
+    // Redirect to the main page
+    window.location.href = "{% url 'main' %}";
+  }
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styling.css' %}">
+{% endblock %}

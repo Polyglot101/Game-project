@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}
+Instructions
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="heading">Instructions</h1>
+    <p class="description">Rock Paper Scissors is a classic hand game usually played between two people. The winner of
+        the game is determined by the following rules:</p>
+    <div class="instructions-list">
+        <div class="instruction">Rock crushes Scissors</div>
+        <div class="instruction">Scissors cuts Paper</div>
+        <div class="instruction">Paper covers Rock</div>
+    </div>
+    <p class="description">Click the button below to start playing!</p>
+    <div class="action-buttons">
+        <a href="{% url 'game' %}" class="btn btn-primary">Start Game</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styling.css' %}">
+<style>
+    .instructions-list {
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
